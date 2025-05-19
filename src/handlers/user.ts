@@ -2,17 +2,36 @@ import { Context } from 'grammy';
 import prisma from '../lib/prisma';
 import { User } from '@prisma/client';
 
-export const createUser = async (telegramId: number): Promise<User> => {
-  return prisma.user.upsert({
-    where: { telegramId: BigInt(telegramId) },
-    update: {},
-    create: {
-      telegramId: BigInt(telegramId),
-      firstName: null,
-      lastName: null,
-      username: null,
-    },
-  });
+interface TelegramUser {
+  id: number;
+  first_name?: string;
+  last_name?: string;
+  username?: string;
+}
+
+export const createUser = async (telegramUser: TelegramUser): Promise<User> => {
+  console.log('Creating user with data:', telegramUser);
+  try {
+    const user = await prisma.user.upsert({
+      where: { telegramId: BigInt(telegramUser.id) },
+      update: {
+        firstName: telegramUser.first_name || null,
+        lastName: telegramUser.last_name || null,
+        username: telegramUser.username || null,
+      },
+      create: {
+        telegramId: BigInt(telegramUser.id),
+        firstName: telegramUser.first_name || null,
+        lastName: telegramUser.last_name || null,
+        username: telegramUser.username || null,
+      },
+    });
+    console.log('User created/updated:', user);
+    return user;
+  } catch (error) {
+    console.error('Error in createUser:', error);
+    throw error;
+  }
 };
 
 export const getUserByTelegramId = async (telegramId: number): Promise<User | null> => {

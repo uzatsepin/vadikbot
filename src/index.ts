@@ -35,7 +35,12 @@ bot.command('start', async (ctx) => {
   
   if (!user) {
     // New user
-    await createUser(ctx.from!.id);
+    await createUser({
+      id: ctx.from!.id,
+      first_name: ctx.from!.first_name,
+      last_name: ctx.from!.last_name,
+      username: ctx.from!.username,
+    });
     await ctx.reply(
       `${WELCOME_MESSAGE}\n\nПохоже, у вас пока нет добавленных автомобилей. Давайте добавим ваш первый автомобиль!`,
       { reply_markup: createMainKeyboard() }
