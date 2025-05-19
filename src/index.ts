@@ -48,7 +48,7 @@ bot.command('start', async (ctx) => {
       if (firstCar) {
         const totalPaid = firstCar.total_paid;
         const remainingAmount = firstCar.remaining_amount;
-        const monthlyPayment = Number(firstCar.totalAmount) / 12; // Assuming 12 months payment plan
+        const monthlyPayment = Number(120); // Assuming 12 months payment plan
         const remainingMonths = Math.ceil(remainingAmount / monthlyPayment);
         const remainingWeeks = Math.ceil(remainingMonths * 4.33); // Average weeks in a month
 
@@ -99,7 +99,7 @@ bot.callbackQuery('view_cars', async (ctx) => {
     const stats = await getCarStatistics(car.id);
     if (!stats) return '';
     
-    const monthlyPayment = Number(stats.totalAmount) / 12;
+    const monthlyPayment = Number(120);
     const remainingMonths = Math.ceil(stats.remaining_amount / monthlyPayment);
     const remainingWeeks = Math.ceil(remainingMonths * 4.33);
 
@@ -107,7 +107,7 @@ bot.callbackQuery('view_cars', async (ctx) => {
            `┌──────────────────────\n` +
            `│ 💵 Стоимость: $${stats.totalAmount}\n` +
            `│ 🎯 Уже вложено: $${stats.total_paid}\n` +
-           `│ 💰 Осталось накопить: $${stats.remaining_amount}\n` +
+           `│ 💰 Осталось закинуть: $${stats.remaining_amount}\n` +
            `│ ⏳ Ещё примерно: ${remainingMonths} мес. (${remainingWeeks} нед.)\n` +
            `└──────────────────────`;
   }));
@@ -144,7 +144,7 @@ bot.callbackQuery(/^car_details_(\d+)$/, async (ctx) => {
     return;
   }
 
-  const monthlyPayment = Number(stats.totalAmount) / 12;
+  const monthlyPayment = Number(120);
   const remainingMonths = Math.ceil(stats.remaining_amount / monthlyPayment);
   const remainingWeeks = Math.ceil(remainingMonths * 4.33);
 
@@ -152,7 +152,7 @@ bot.callbackQuery(/^car_details_(\d+)$/, async (ctx) => {
                  `┌──────────────────────\n` +
                  `│ 💵 Стоимость: $${stats.totalAmount}\n` +
                  `│ 🎯 Уже вложено: $${stats.total_paid}\n` +
-                 `│ 💰 Осталось накопить: $${stats.remaining_amount}\n` +
+                 `│ 💰 Осталось закинуть: $${stats.remaining_amount}\n` +
                  `│ ⏳ Ещё примерно: ${remainingMonths} мес. (${remainingWeeks} нед.)\n` +
                  `└──────────────────────`;
 
@@ -248,7 +248,7 @@ bot.callbackQuery(/^view_payments_(\d+)$/, async (ctx) => {
     `└──────────────────────`
   ).join('\n');
 
-  const monthlyPayment = Number(car.totalAmount) / 12;
+  const monthlyPayment = Number(120);
   const remainingMonths = Math.ceil(car.remaining_amount / monthlyPayment);
   const remainingWeeks = Math.ceil(remainingMonths * 4.33);
 
@@ -257,7 +257,7 @@ bot.callbackQuery(/^view_payments_(\d+)$/, async (ctx) => {
     `┌──────────────────────\n` +
     `│ 💵 Стоимость: $${car.totalAmount}\n` +
     `│ 🎯 Уже вложено: $${car.total_paid}\n` +
-    `│ 💰 Осталось накопить: $${car.remaining_amount}\n` +
+    `│ 💰 Осталось закинуть: $${car.remaining_amount}\n` +
     `│ ⏳ Ещё примерно: ${remainingMonths} мес. (${remainingWeeks} нед.)\n` +
     `└──────────────────────`,
     { reply_markup: createCarKeyboard(carId) }
@@ -279,7 +279,7 @@ bot.callbackQuery('statistics', async (ctx) => {
     const stats = await getCarStatistics(car.id);
     if (!stats) return '';
     
-    const monthlyPayment = Number(stats.totalAmount) / 12;
+    const monthlyPayment = Number(120);
     const remainingMonths = Math.ceil(stats.remaining_amount / monthlyPayment);
     const remainingWeeks = Math.ceil(remainingMonths * 4.33);
 

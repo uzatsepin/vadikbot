@@ -22,7 +22,7 @@ export const WELCOME_MESSAGE = `Йоу, братишка! 🤙
 
 Кстати, если что, я шарю за все темы на сокаре, могу подсказать, как там правильно мутиться 😎
 
-Давай замутим твою первую тачку в списке! Жми "Замутить тачку" и погнали! 🚀`;
+Давай замутим твою первую тачку в списке! Жми "Добавить брычку" и погнали! 🚀`;
 
 // Error messages
 export const ERROR_MESSAGES = {
@@ -47,8 +47,8 @@ export const SUCCESS_MESSAGES = {
 
 // Inline keyboard options
 export const MAIN_MENU = {
-  add_car: '🚗 Замутить тачку',
-  view_cars: '🏎 Мои ласточки',
+  add_car: '🚗 Добавить брычку',
+  view_cars: '🏎 Мои брычки',
   add_payment: '💸 Занести бабки',
   view_payments: '📊 Движение бабла',
   statistics: '📈 Статистика',
@@ -70,7 +70,6 @@ export const createCarKeyboard = (carId: number) => {
   return new InlineKeyboard()
     .text(MAIN_MENU.add_payment, `add_payment_${carId}`).row()
     .text(MAIN_MENU.view_payments, `view_payments_${carId}`).row()
-    .text(MAIN_MENU.statistics, `statistics_${carId}`).row()
     .text(MAIN_MENU.back, 'view_cars');
 };
 

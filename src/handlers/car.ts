@@ -8,14 +8,22 @@ export const createCar = async (
   remainingAmount: number,
   totalAmount: number
 ): Promise<Car> => {
-  return prisma.car.create({
-    data: {
-      userId,
-      name,
-      remainingAmount,
-      totalAmount,
-    },
-  });
+  console.log('Starting createCar with params:', { userId, name, remainingAmount, totalAmount });
+  try {
+    const car = await prisma.car.create({
+      data: {
+        userId,
+        name,
+        remainingAmount,
+        totalAmount,
+      },
+    });
+    console.log('Car created successfully in database:', car);
+    return car;
+  } catch (error) {
+    console.error('Error in createCar:', error);
+    throw error;
+  }
 };
 
 export const getCarById = async (carId: number): Promise<Car | null> => {

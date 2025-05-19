@@ -16,9 +16,17 @@ export const createUser = async (telegramId: number): Promise<User> => {
 };
 
 export const getUserByTelegramId = async (telegramId: number): Promise<User | null> => {
-  return prisma.user.findUnique({
-    where: { telegramId: BigInt(telegramId) },
-  });
+  console.log('Looking up user by telegram ID:', telegramId);
+  try {
+    const user = await prisma.user.findUnique({
+      where: { telegramId: BigInt(telegramId) },
+    });
+    console.log('User lookup result:', user);
+    return user;
+  } catch (error) {
+    console.error('Error in getUserByTelegramId:', error);
+    throw error;
+  }
 };
 
 export const getUserCars = async (userId: number) => {
