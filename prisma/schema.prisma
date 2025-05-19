@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  telegramId BigInt    @unique @map("telegram_id")
+  username   String?
+  firstName  String?   @map("first_name")
+  lastName   String?   @map("last_name")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  cars       Car[]
+  payments   Payment[]
+
+  @@map("users")
+}
+
+model Car {
+  id              Int       @id @default(autoincrement())
+  userId          Int       @map("user_id")
+  name            String
+  remainingAmount Decimal   @map("remaining_amount")
+  totalAmount     Decimal   @map("total_amount")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  payments        Payment[]
+
+  @@map("cars")
+}
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  carId       Int      @map("car_id")
+  userId      Int      @map("user_id")
+  amount      Decimal
+  paymentDate DateTime @default(now()) @map("payment_date")
+  createdAt   DateTime @default(now()) @map("created_at")
+  car         Car      @relation(fields: [carId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}

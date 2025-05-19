@@ -1,0 +1,31 @@
+{
+  "name": "car-payment-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot for tracking car payments",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@grammyjs/conversations": "^2.1.0",
+    "@prisma/client": "^6.8.2",
+    "@types/node": "^20.17.48",
+    "@types/node-cron": "^3.0.11",
+    "@types/pg": "^8.15.2",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "grammy": "^1.36.1",
+    "node-cron": "^4.0.5",
+    "nodemon": "^3.1.10",
+    "pg": "^8.16.0",
+    "prisma": "^6.8.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}
